@@ -40,7 +40,7 @@ jobs:
           python automation.py "${{ github.event.issue.title }}" "${{ github.event.issue.body }}"
 
       - name: Close automated issues
-        if: ${{ contains(github.event.issue.labels.*.name, 'automated') && github.event.issue.pull_request == null }}
+        if: ${{ github.event.issue.pull_request == null }}
         uses: actions/github-script@v6
         with:
           script: |
