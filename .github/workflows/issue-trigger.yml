@@ -24,3 +24,8 @@ jobs:
       - name: Read issue title
         run: |
           python automation.py "${{ github.event.issue.title }}" "${{ github.event.issue.body }}" 
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+          git add args.txt
+          git commit -m "Add args.txt from issue trigger"
+          git push
