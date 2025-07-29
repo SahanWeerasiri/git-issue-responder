@@ -137,6 +137,12 @@ def update_files(files_to_update: List[FileInfo], issue_title: str, issue_descri
     for file_info in files_to_update:
         try:
             updated_content = generate_updated_content(file_info.content, issue_title, issue_description)
+            if updated_content.startswith("```"):
+                # If the content starts with a code block, remove first line
+                updated_content = updated_content.split('\n', 1)[1]
+            if updated_content.endswith("```"):
+                # If the content ends with a code block, remove last line
+                updated_content = updated_content.rsplit('\n', 1)[0]
             
             with open(file_info.path, 'w', encoding='utf-8') as f:
                 f.write(updated_content)

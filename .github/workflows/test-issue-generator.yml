@@ -20,23 +20,23 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
+      # - name: Set up Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.8'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+      # - name: Install dependencies
+      #   run: |
+      #     python -m pip install --upgrade pip
+      #     pip install -r requirements.txt
 
-      - name: Configure Git
-        run: |
-          git config --global user.name "sahanweerasiri"
-          git config --global user.email "smudunlahiru@gmail.com"
+      # - name: Configure Git
+      #   run: |
+      #     git config --global user.name "sahanweerasiri"
+      #     git config --global user.email "smudunlahiru@gmail.com"
 
-      - name: Process issue
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: |
-          python automation.py "[AUTO-GENERATED] Need to update the response given by the / url path" "Fix the response message to be more informative and user-friendly."
+      # - name: Process issue
+      #   env:
+      #     GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      #   run: |
+      #     python automation.py "[AUTO-GENERATED] Need to update the response given by the / url path" "Fix the response message to be more informative and user-friendly."
