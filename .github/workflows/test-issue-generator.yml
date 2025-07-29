@@ -2,21 +2,31 @@ name: Python - Test Issue Generator Workflow
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - master
       
 jobs:
-  create-test-issue:
+  process-issue:
     runs-on: ubuntu-latest
     permissions:
-      issues: write  # Required to create issues
+      issues: write  # Required to close issues
+      contents: read  # Required for checkout
+    
     steps:
-      - name: Create Test Issue
-        uses: actions/github-script@v6
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          script: |
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: "[AUTO-GENERATED] Test Issue",
-              body: "This issue was created by the test generator\n\n- Action Item 1\n- Action Item 2",
-              labels: ["automated", "test"]
-            });
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Process issue
+        run: |
+          python automation.py "[AUTO-GENERATED] Test Issue" "This issue was created by the test generator\n\n- Action Item 1\n- Action Item 2"
