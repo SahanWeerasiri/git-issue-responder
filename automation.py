@@ -46,6 +46,8 @@ def read_file_structure(root_dir: str = ".") -> List[FileInfo]:
                 continue
                 
             file_path = os.path.join(root, file)
+            if "project/" not in file_path:
+                continue
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     content = f.read()
