@@ -29,4 +29,4 @@ jobs:
 
       - name: Process issue
         run: |
-          python automation.py "[AUTO-GENERATED] Test Issue" "This issue was created by the test generator\n\n- Action Item 1\n- Action Item 2"
+          python automation.py "[AUTO-GENERATED] Need to update the response given by the / url path" "Fix the response message to be more informative and user-friendly."
