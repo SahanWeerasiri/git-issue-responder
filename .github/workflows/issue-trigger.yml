@@ -1,18 +1,22 @@
-name: Python - Issue Trigger Workflow
+name: Issue Trigger
 
 on:
   issues:
     types: [opened, edited]
 
 jobs:
-  build-the-work-space:
+  process-issue:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write  # Required to close issues
+      contents: read  # Required for checkout
+    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4
         with:
           python-version: '3.8'
 
@@ -21,16 +25,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Read issue title
+      - name: Process issue
         run: |
           python automation.py "${{ github.event.issue.title }}" "${{ github.event.issue.body }}"
 
-  close-issue:
-    runs-on: ubuntu-latest
-    needs: build-the-work-space
-    if: ${{ github.event.issue.pull_request == null }}  # Only run for issues (not PRs)
-    steps:
-      - name: Close issue
+      - name: Close automated issues
+        if: ${{ contains(github.event.issue.labels.*.name, 'automated') && github.event.issue.pull_request == null }}
         uses: actions/github-script@v6
         with:
           script: |
@@ -38,5 +38,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.payload.issue.number,
-              state: 'closed'
+              state: 'closed',
+              body: context.payload.issue.body + '\n\n[Automatically closed by workflow]'
             });

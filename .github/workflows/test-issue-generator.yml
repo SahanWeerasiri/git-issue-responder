@@ -4,21 +4,21 @@ on:
   push:
     branches:
       - master
-
+      
 jobs:
-  create-issue:
+  create-test-issue:
     runs-on: ubuntu-latest
+    permissions:
+      issues: write  # Required to create issues
     steps:
-      - name: Create Issue
+      - name: Create Test Issue
         uses: actions/github-script@v6
         with:
           script: |
             await github.rest.issues.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              title: "Automated Issue: Daily Check",
-              body: "This issue was created automatically by GitHub Actions.\n\n- Task 1\n- Task 2",
-              labels: ["automated", "triage"]
+              title: "[AUTO-GENERATED] Test Issue",
+              body: "This issue was created by the test generator\n\n- Action Item 1\n- Action Item 2",
+              labels: ["automated", "test"]
             });
-
-      
