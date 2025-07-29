@@ -26,6 +26,8 @@ jobs:
           pip install -r requirements.txt
 
       - name: Process issue
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python automation.py "${{ github.event.issue.title }}" "${{ github.event.issue.body }}"
 

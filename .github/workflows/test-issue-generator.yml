@@ -28,5 +28,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Process issue
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: |
           python automation.py "[AUTO-GENERATED] Need to update the response given by the / url path" "Fix the response message to be more informative and user-friendly."
