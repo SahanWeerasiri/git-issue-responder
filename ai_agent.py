@@ -2,10 +2,7 @@ from enum import Enum
 import os
 import time
 import requests
-import dotenv
 import logging
-
-dotenv.load_dotenv(os.path.join(os.path.dirname(__file__), '..', '.env'))
 
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
