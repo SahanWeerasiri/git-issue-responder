@@ -1,4 +1,4 @@
-name: Python - Issue Trigger Workflow
+name: Python - Test Issue Generator Workflow
 
 on:
   push:
