@@ -1,12 +1,8 @@
 import sys
 import os
 import subprocess
-from typing import List, Dict, Optional
-from enum import Enum
-import time
-import requests
+from typing import List
 import dotenv
-import logging
 from ai_agent import llm_request  # Assuming this is in a separate file
 
 # Configure environment variables
