@@ -1,6 +1,7 @@
 name: Python - Test Issue Generator Workflow
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -22,6 +23,3 @@ jobs:
               body: "This issue was created by the test generator\n\n- Action Item 1\n- Action Item 2",
               labels: ["automated", "test"]
             });
-
-      - name: Wait for trigger
-        run: sleep 10
