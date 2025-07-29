@@ -27,6 +27,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Configure Git
+        run: |
+          git config --global user.name "sahanweerasiri"
+          git config --global user.email "smudunlahiru@gmail.com"
+
       - name: Process issue
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
