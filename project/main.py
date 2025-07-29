@@ -1,9 +1,26 @@
 from flask import Flask, request, jsonify
 import math
+import functools  # Import functools for wrapping functions
 
 app = Flask(__name__)
 
+# In-memory store for API keys (replace with a more secure solution for production)
+API_KEYS = {'mysecretkey': True, 'anotherkey': True}
+
+# Authentication decorator
+def authenticate(f):
+    @functools.wraps(f)  # Preserve original function's metadata
+    def wrapper(*args, **kwargs):
+        api_key = request.headers.get('X-API-Key')
+        if api_key and API_KEYS.get(api_key):
+            return f(*args, **kwargs)  # Call the original function if authenticated
+        else:
+            return jsonify({'error': 'Unauthorized'}), 401
+    return wrapper
+
+
 @app.route('/')
+@authenticate  # Apply authentication to the home route
 def home():
     # Updated the response message to be more informative and user-friendly
     # Updated the response to be "something cool"
@@ -11,6 +28,7 @@ def home():
 
 # New endpoint to calculate the area of a circle
 @app.route('/area', methods=['POST'])
+@authenticate  # Apply authentication to the area calculation route
 def calculate_area():
     """
     Calculates the area of a circle based on the radius provided in the request.
